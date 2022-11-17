@@ -1,4 +1,4 @@
-#  <#Title#>
+#  LineGraph
 
 ## 輸入參數
   * dataModel:[CGFloat]
