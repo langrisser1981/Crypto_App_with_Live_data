@@ -1,4 +1,7 @@
-#  LineGraph
+# 貨幣App
+---
+> 可以讀取網路上的加密貨幣7日間的漲跌幅與價格
+> 並透過動畫的形式將折線圖畫出來
 
 ## 輸入參數
   * dataModel:[CGFloat]
@@ -42,3 +45,30 @@
   * 在geometryReader上套用overlay或是在zstack新增一個vstack
   * 標註最大值、spacer、最小值
   
+## 建立SegmentedTab
+  * 將標籤放在ScrollView中
+    ** 標籤選單的外框放在background，利用stroke描出外框線
+    ** 按鈕放在HStack，利用ForEach讀出每筆資料，建立對應的按鈕
+       而按鈕背景，可以在background中，基於顯示與否(透過onTapGesture切換)，透過matchedGeometryEffect製作出動態位移的轉場
+  * matchedGeometryEffect，一般透過狀態變數與if搭配，在不同的狀態下，同一組view中(id相同)，一個view對應一個特定的狀態，狀態切換時會自動產生轉換動畫
+  * 要注意一般的容器(HStack, VStack...)是基於內部元件的尺寸來決定自己的尺寸，但可以透過frame指定固定大小，或是佔用最大寬度/高度
+  * 容器內元件的對齊，可以透過
+    1. 透過容器的建構子，如VStack(alignment:)，但垂直擺放的容器，這裡只能指定水平對齊方式；水平擺放的容器，則是只能指定垂直對齊方式
+    2. 透過frame(alignment:)，垂直容器，可以指定元件由top, center, bottom開始擺放；水平容器，可以指定元件由leading, center, trailing開始擺放
+    3. 利用Spacer()，直接佔用剩餘的尺寸，將其餘的元件擠到邊邊
+
+## 讀取網路資料
+  * 建立DataModel
+    ** 透過 keyDecodingStrategy = .convertFromSnakeCase，將資料中key的映射，從 a_b 轉換為 aB
+    ** 要透過 enum CodingKeys，將json object key轉換成自訂型別的屬性名稱
+    ** 提供一組sample資料(靜態變數)，方便離線測試
+  * 宣告HttpDataLoader協定，提供一個load方法，回傳data型別的資料
+    ** load方法是async throws，因為會從網路抓取資料，且json轉換過程可能會丟出錯誤
+    ** extension URLSession，並實作HttpDataLoader協定，在load裡面使用內建的data方法抓取資料
+        檢查回傳的狀態碼是否有包含在200...299
+    ** 實作TestDownloader，讀取本機上的json檔來模擬從遠端下載資料，方便離線測試
+        使用Task.sleep()模擬載入的時間差
+        分為三個步驟，取得json檔案對應的url(Bundle.main.url)，透過url讀取json檔案，轉換json data為自訂型別
+  * 建立一個load方法，接收字串檔名，讀取json檔案，最後回傳自訂型別；可以作為資料型別的sample資料，方便離線測試
+  * 建立DataProvider，實作ObservableObject，將資料曝露出來給View訂閱
+    ** 提供一個fetch方法，可以接收不同的loader參數，將 __讀取遠端或是本機資料__ 透過loader注射進去，方便在preview中看到測試結果
