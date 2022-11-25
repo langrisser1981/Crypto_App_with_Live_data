@@ -27,10 +27,11 @@ struct LineGraph: View {
             let size = proxy.size
             let segmentWidth = size.width / CGFloat(data.count - 1)
             let segmentHeight = size.height
-            let maxValue = (data.max() ?? 0) + 100
+            let maxValue = (data.max() ?? 0)
+            let minValue = (data.min() ?? 0)
             let points: [CGPoint] = data.enumerated().compactMap { item in
                 let x = segmentWidth * CGFloat(item.offset)
-                let y = segmentHeight * (item.element / maxValue)
+                let y = segmentHeight * ((item.element - minValue) / (maxValue - minValue))
                 return CGPoint(x: x, y: -y + size.height)
             }
 
@@ -123,7 +124,7 @@ struct LineGraph: View {
                 Text("$ \(Int(data.max() ?? 0))")
                     .font(.caption.bold())
                 Spacer()
-                Text("$ 0")
+                Text("$ \(Int(data.min() ?? 0))")
                     .font(.caption.bold())
             }
             .frame(maxWidth: .infinity, alignment: .leading)

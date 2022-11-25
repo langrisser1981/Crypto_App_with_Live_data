@@ -10,7 +10,7 @@ import Foundation
 class TestLoader: HttpDataLoader {
     func load(from: URL) async throws -> Data {
         // 模擬網路載入所需的時間，隨機停止1~5秒
-        try await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000 ... 5_000_000_000))
+//        try await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000 ... 5_000_000_000))
 
         // 取得檔案url
         guard let fileUrl = Bundle.main.url(forResource: "sample.json", withExtension: nil) else {

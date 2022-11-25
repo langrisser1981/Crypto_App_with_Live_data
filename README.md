@@ -3,14 +3,13 @@
 > 可以讀取網路上的加密貨幣7日間的漲跌幅與價格
 > 並透過動畫的形式將折線圖畫出來
 
-## 輸入參數
-  * dataModel:[CGFloat]
-  * theme:Color
-  
-### 資料轉換
-  將原始的[CGFloat]轉換為[CGPoint]
+![demo_still_image](./lineGraph_image.png "still")
+![demo_gif](./lineGraph_gif.gif "gif")
+
+## 資料轉換
+  將的[Double]轉換為[CGPoint]
   * 找出資料中最大與最小值
-  * 得到path物件
+  * 利用path物件，將[CGPoint]中的點依次畫出來
 
 ## 把所有的東西包在geometryReader
   * 利用geometryProxy取得畫面長寬
