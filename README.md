@@ -71,3 +71,9 @@
   * 建立一個load方法，接收字串檔名，讀取json檔案，最後回傳自訂型別；可以作為資料型別的sample資料，方便離線測試
   * 建立DataProvider，實作ObservableObject，將資料曝露出來給View訂閱
     ** 提供一個fetch方法，可以接收不同的loader參數，將 __讀取遠端或是本機資料__ 透過loader注射進去，方便在preview中看到測試結果
+
+## 增加線段動畫
+  * 因為path無法套用動畫，所以要新增一個struct shape，然後自訂path
+  * 實作animatable參數，對應一個進度值，在withAnimation中操作這個進度值，來產生動畫
+  * path的繪製可以用trimmerPath來控制；shape則是用trim
+  

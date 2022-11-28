@@ -127,7 +127,7 @@ struct ContentView: View {
 
     @ViewBuilder
     func graphView(coin: CoinModel)->some View {
-        LineGraph(data: coin.last_7days_price.price)
+        LineGraph(data: coin.last_7days_price.price, profit: coin.price_change_24h > 0)
             .frame(height: 500)
     }
 }
