@@ -1,11 +1,14 @@
-# 貨幣App
+# Crypto_App
 ---
-> 可以讀取網路上的加密貨幣7日間的漲跌幅與價格
-> 並透過動畫的形式將折線圖畫出來
+> 從網路上讀取7日漲跌幅與價格變動
+> 再透過動態轉場將折線圖繪製出來
 
-![demo_still_image](./lineGraph_image.png "still")
+<img src="./lineGraph_image.png" width=200>
+
 ![demo_gif](./lineGraph_gif.gif "gif")
 
+> API Link:[https://api.coingecko.com/api/v3/coin...](https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&sparkline=true&price_change_percentage=24h)
+---
 ## 資料轉換
   將的[Double]轉換為[CGPoint]
   * 找出資料中最大與最小值
